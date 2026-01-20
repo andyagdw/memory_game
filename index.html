@@ -8,5 +8,99 @@
     <script src="./script.js" defer></script>
     <title>Memory Game</title>
   </head>
-  <body></body>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <h1>Memory Game</h1>
+      </header>
+      <main>
+        <div class="play-game-btn-wrapper">
+          <div>
+            <button class="button button--play-game">Play Game</button>
+          </div>
+          <div>
+            <button
+              class="button"
+              commandfor="how-to-play-guide"
+              command="show-modal"
+            >
+              How to play
+            </button>
+          </div>
+        </div>
+        <!-- HOW TO PLAY GUIDE -->
+        <dialog id="how-to-play-guide" class="dialog">
+          <div class="dialog__close-btn-wrapper">
+            <button class="button" commandfor="how-to-play-guide" command="close"></button>
+          </div>
+          <hgroup>
+            <h2 class="dialog__heading">Memory Game Guide</h2>
+            <p>How good is your memory?</p>
+          </hgroup>
+          <p>
+            Red, Blue, Green squares appear randomly on a 4 x 4 grid one after the
+            other when a game has started. They are visible for around one second
+            and then disappears.
+          </p>
+          <p>
+            You need to
+            <strong
+              >correctly enter in how many red, blue, and green squares
+              appeared.</strong
+            >
+            The game starts with three squares that appear randomly on the board.
+          </p>
+    
+          <p>There are <strong>three input fields</strong>:</p>
+          <ul class="dialog__list dialog-list">
+            <li class="dialog-list__item">
+              Input field one: Enter in how many red squares appeared on the game
+              board.
+            </li>
+            <li class="dialog-list__item">
+              Input field two: Enter in how many green squares appeared on the game
+              board.
+            </li>
+            <li class="dialog-list__item">
+              Input field three: Enter in how many blue squares appeared on the game
+              board.
+            </li class="dialog-list__item">
+          </ul>
+          <p>If you get the answer wrong, the game ends.</p>
+          <p>If you get the answer right, you can progress to the next stage.</p>
+          <p>Good luck!</p>
+        </dialog>
+        <!-- END HOW TO PLAY GUIDE -->
+      </main>
+      <footer class="footer">
+        <span class="year"></span> | All Rights Reserved.
+      </footer>
+    </div>
+    <!-- <table>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table> -->
+  </body>
 </html>
