@@ -2,12 +2,12 @@
 
 ## Game overview guide 📓
 
-Red, Blue, Green squares appear randomly on a **4 x 4 grid** one after the other when a game has started (occurs after two seconds the _Start_ button is clicked).
+Red, Blue, Green squares appear randomly on a **3 x 3 grid** one after the other when a game has started (occurs after two seconds the _Start_ button is clicked).
 They are visible for around one second and then disappears.
 
 The user needs to **correctly enter in how many red, blue, and green squares appeared**.
 
-There will be three input fields:
+For each level, there are three input fields:
 
     - Input field one - how many red squares appeared
     - Input field two - how many blue squares appeared
@@ -17,7 +17,7 @@ If the user gets the answer wrong, the game ends. "Game over" message appears on
 by clicking the _Play Again_ button.
 
 If the user gets the answer right, the user progresses to the next stage. They do this by clicking the _Next_ button. The game gets harder
-by increasing the number of sqaures that appear on the board by one for every level.
+by increasing the number of squares that appear on the board by one for every level.
 
 The game starts with three squares that appear randomly on the board.
 
