@@ -11,12 +11,22 @@
   body {
     block-size: 100%;
   }
+
+  button {
+    font: inherit;
+  }
 }
 
 $table-color: lightblue;
 $red: red;
 $blue: blue;
 $green: green;
+
+// GENERAL
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 1s;
+}
 
 .red {
   background-color: $red;
@@ -30,6 +40,27 @@ $green: green;
   background-color: $green;
 }
 
+.correct-answer {
+  color: $green;
+}
+
+.incorrect-answer {
+  color: $red;
+}
+
+// GOOGLE FONT
+.bitcount-single-google-font {
+  font-family: "Bitcount Single", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400; // 100 - 900
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "CRSV" 0.5,
+    "ELSH" 0,
+    "ELXP" 0;
+}
+
 @mixin flexbox-styling(
   $align-items: center,
   $justify-content: center,
@@ -41,14 +72,51 @@ $green: green;
   flex-direction: $flex-direction;
 }
 
-// GENERAL
+@mixin body-bg-styling($url) {
+  background-image: url($url);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(
+      to bottom,
+      rgb(0 0 0 / 0.6),
+      rgb(0 0 0 / 0.9)
+    );
+  }
+}
+
+body {
+  color: white;
+}
+
+body.home-page-body {
+  @include body-bg-styling("./images/landing_page.png");
+}
+
+body.game-page-body {
+  @include body-bg-styling("./images/game_page.png");
+}
+
 .header {
   padding-block: 1em;
   padding-inline: 2em;
+
+  &__heading {
+    font-weight: 500;
+    font-size: 2.5rem;
+  }
 }
 
 .footer {
-  padding: 2em;
+  padding-block-start: 1em;
+  padding-inline: 2em;
+  background-image: linear-gradient(to bottom, rgb(0 0 0 / 0.8));
 }
 
 p {
@@ -71,6 +139,7 @@ p {
 .hidden {
   display: none;
 }
+
 // END GENERAL
 
 // HOME PAGE
@@ -118,8 +187,8 @@ p {
     border-radius: 100vw;
     border: none;
     position: absolute;
-    top: 1em;
-    right: 1em;
+    inset-block-start: 1em;
+    inset-inline-end: 1em;
 
     &::before {
       content: " \00D7";
@@ -135,7 +204,7 @@ p {
   @include flexbox-styling($flex-direction: column);
   // Override display flex
   display: none;
-  width: min(90%, 600px);
+  inline-size: min(90%, 600px);
   margin-inline: auto;
 
   &__heading {
@@ -153,8 +222,9 @@ p {
 }
 
 .form-wrapper {
-  width: 100%;
+  inline-size: 100%;
   padding-inline: 0.2em;
+  margin-block-end: 2em;
 }
 
 .answer-form__input-wrapper {
@@ -168,7 +238,7 @@ p {
     margin-block-start: 0.5em;
     padding-inline-start: 0.5em;
     padding-block: 0.8em;
-    width: 100%;
+    inline-size: 100%;
   }
 }
 

@@ -50,6 +50,7 @@ const table = document.querySelector(".js-table");
 const numOfLivesHeading = document.querySelector(
   ".js-game-wrapper__num-of-lives-heading",
 );
+const body = document.querySelector("body");
 // ===================================================
 const enableInputFields = () => {
   // Enable input fields and button
@@ -139,6 +140,13 @@ const generateSquares = () => {
   }
 };
 
+const updateBodyBackground = () => {
+  if (body.classList.contains("home-page-body")) {
+    body.classList.remove("home-page-body");
+    body.classList.add("game-page-body");
+  }
+};
+
 const startGame = () => {
   // Hide home page
   homePageWrapper.style.display = "none";
@@ -148,6 +156,14 @@ const startGame = () => {
   levelText.innerText = `Level ${levelVal}`;
   // Update 'number of lives remaining text'
   numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
+  // Update body background
+  if (!document.startViewTransition) {
+    updateBodyBackground();
+  } else {
+    document.startViewTransition(() => {
+      updateBodyBackground();
+    });
+  }
   // Start generating random squares
   generateSquares();
 };
@@ -166,9 +182,24 @@ const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
     levelVal = 1;
     // Reset number of lives remaining
     numOfLivesRemaining = 3;
+    // Reset text colour
+    if (correctIncorrectText.classList.contains("incorrect-answer")) {
+      correctIncorrectText.classList.remove("incorrect-answer");
+    }
+    if (body.classList.contains("game-page-body")) {
+      // Add original body background
+      body.classList.remove("game-page-body");
+      body.classList.add("home-page-body");
+    }
   }
   // Update level text
-  levelText.textContent = levelTextTextContent;
+  if (!document.startViewTransition) {
+    levelText.textContent = levelTextTextContent;
+  } else {
+    document.startViewTransition(
+      () => (levelText.textContent = levelTextTextContent),
+    );
+  }
   // Reset input fields and set to disabled
   redInput.value = "0";
   blueInput.value = "0";
@@ -228,6 +259,7 @@ answerForm.addEventListener("submit", (e) => {
   ) {
     correctIncorrectTextWrapper.classList.remove("hidden");
     correctIncorrectText.textContent = "Congratulations!";
+    correctIncorrectText.classList.add("correct-answer");
     nextLvlOrEndGameBtn.classList.remove("hidden");
     nextLvlOrEndGameBtn.textContent = nextLevelText;
     // Wrong answer
@@ -247,17 +279,28 @@ answerForm.addEventListener("submit", (e) => {
       answerObj.green = 0;
       // Show incorrect text at the bottom
       correctIncorrectTextWrapper.classList.remove("hidden");
+      // Remove correct colour text, if present
+      if (correctIncorrectText.classList.contains("correct-answer")) {
+        correctIncorrectText.classList.remove("correct-answer");
+      }
       correctIncorrectText.textContent = "Incorrect!";
-      // Update number of lives remaining text
-      numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
       updateCorrectIncorrectText();
     } else {
       // No lives remaining
-      numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
       correctIncorrectTextWrapper.classList.remove("hidden");
       correctIncorrectText.textContent = "Game over!";
+      correctIncorrectText.classList.add("incorrect-answer");
       nextLvlOrEndGameBtn.classList.remove("hidden");
       nextLvlOrEndGameBtn.textContent = endGameText;
+    }
+    // Update number of lives remaining text
+    if (!document.startViewTransition) {
+      numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
+    } else {
+      document.startViewTransition(
+        () =>
+          (numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`),
+      );
     }
   }
   // Disable submit button to prevent another form submission

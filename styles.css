@@ -11,7 +11,15 @@
   body {
     block-size: 100%;
   }
+  button {
+    font: inherit;
+  }
 }
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 1s;
+}
+
 .red {
   background-color: red;
 }
@@ -24,13 +32,69 @@
   background-color: green;
 }
 
+.correct-answer {
+  color: green;
+}
+
+.incorrect-answer {
+  color: red;
+}
+
+.bitcount-single-google-font {
+  font-family: "Bitcount Single", system-ui;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "slnt" 0, "CRSV" 0.5, "ELSH" 0, "ELXP" 0;
+}
+
+body {
+  color: white;
+}
+
+body.home-page-body {
+  background-image: url("./images/landing_page.png");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  position: relative;
+}
+body.home-page-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9));
+}
+
+body.game-page-body {
+  background-image: url("./images/game_page.png");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  position: relative;
+}
+body.game-page-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9));
+}
+
 .header {
   padding-block: 1em;
   padding-inline: 2em;
 }
+.header__heading {
+  font-weight: 500;
+  font-size: 2.5rem;
+}
 
 .footer {
-  padding: 2em;
+  padding-block-start: 1em;
+  padding-inline: 2em;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8));
 }
 
 p {
@@ -98,8 +162,8 @@ p {
   border-radius: 100vw;
   border: none;
   position: absolute;
-  top: 1em;
-  right: 1em;
+  inset-block-start: 1em;
+  inset-inline-end: 1em;
 }
 .dialog__close-btn-wrapper button::before {
   content: " ×";
@@ -112,7 +176,7 @@ p {
   justify-content: center;
   flex-direction: column;
   display: none;
-  width: min(90%, 600px);
+  inline-size: min(90%, 600px);
   margin-inline: auto;
 }
 .game-wrapper__heading {
@@ -127,8 +191,9 @@ p {
 }
 
 .form-wrapper {
-  width: 100%;
+  inline-size: 100%;
   padding-inline: 0.2em;
+  margin-block-end: 2em;
 }
 
 .answer-form__input-wrapper {
@@ -141,7 +206,7 @@ p {
   margin-block-start: 0.5em;
   padding-inline-start: 0.5em;
   padding-block: 0.8em;
-  width: 100%;
+  inline-size: 100%;
 }
 
 .answer-form__btn-wrapper {
