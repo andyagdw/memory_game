@@ -92,18 +92,21 @@ const createRandomColouredSquare = (randomSquare) => {
 };
 
 const generateSquares = () => {
-  for (let i = 0; i < numOfSquares; i++) {
+  for (let i = 0; i <= numOfSquares; i++) {
     setTimeout(
       () => {
-        if (i === numOfSquares - 1) {
-          setTimeout(enableInputFields, (i + 1) * delayTime);
-        }
-        // ! Add logic here that stores previous index and colour, if same, changes it
-        const randomSquare =
-          table.getElementsByTagName("td")[getRandomTableCellIndex(boardSize)];
-        createRandomColouredSquare(randomSquare);
+        if (i === numOfSquares) {
+          enableInputFields();
+        } else {
+          // ! Add logic here that stores previous index and colour, if same, changes it
+          const randomSquare =
+            table.getElementsByTagName("td")[
+              getRandomTableCellIndex(boardSize)
+            ];
+          createRandomColouredSquare(randomSquare);
 
-        setTimeout(removeRandomColouredSquare, delayTime, randomSquare);
+          setTimeout(removeRandomColouredSquare, delayTime, randomSquare);
+        }
       },
       (i + 1) * delayTime,
     );
