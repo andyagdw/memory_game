@@ -12,6 +12,8 @@ const myObj = {
 const boardSize = 4;
 let levelVal = 1; // The level the user is currently on
 let numOfSquares = 3; // The default number of squares to generate for level 1
+const endGameText = "End Game";
+const nextLevelText = "Next";
 
 // ===================================================
 /** @type {HTMLSpanElement} */
@@ -115,6 +117,8 @@ const resetStyles = (levelTextTextContent = "", answerWasCorrect = true) => {
     gameWrapper.style.display = "none";
     // Display home page
     homePageWrapper.style.display = "block";
+    // Reset level
+    levelVal = 1;
   }
   // Update Level text
   levelText.textContent = levelTextTextContent;
@@ -134,11 +138,11 @@ const resetStyles = (levelTextTextContent = "", answerWasCorrect = true) => {
 // ===================================================
 startGameBtn.addEventListener("click", startGame);
 nextLevelBtn.addEventListener("click", () => {
-  if (nextLevelBtn.textContent === "End Game") {
+  if (nextLevelBtn.textContent === endGameText) {
     resetStyles("", false);
     // Reset number of squares
     numOfSquares = 3;
-  } else if (nextLevelBtn.textContent === "Next") {
+  } else if (nextLevelBtn.textContent === nextLevelText) {
     resetStyles(`Level ${++levelVal}`);
     // Generate next game squares
     // Increase number of squares by 1
@@ -158,12 +162,12 @@ answerForm.addEventListener("submit", (e) => {
     correctIncorrectTextWrapper.classList.remove("hidden");
     correctIncorrectText.textContent = "Congratulations!";
     nextLevelBtn.classList.remove("hidden");
-    nextLevelBtn.textContent = "Next";
+    nextLevelBtn.textContent = nextLevelText;
   } else {
     correctIncorrectTextWrapper.classList.remove("hidden");
     correctIncorrectText.textContent = "Incorrect!";
     nextLevelBtn.classList.remove("hidden");
-    nextLevelBtn.textContent = "End Game";
+    nextLevelBtn.textContent = endGameText;
   }
   // Disable submit button to prevent another form submission
   submitBtn.setAttribute("disabled", true);

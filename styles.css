@@ -111,6 +111,7 @@ p {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  display: none;
   width: min(90%, 600px);
   margin-inline: auto;
 }

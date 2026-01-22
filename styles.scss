@@ -133,7 +133,8 @@ p {
 // GAME BOARD
 .game-wrapper {
   @include flexbox-styling($flex-direction: column);
-  // display: none;
+  // Override display flex
+  display: none;
   width: min(90%, 600px);
   margin-inline: auto;
 
