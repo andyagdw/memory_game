@@ -3,7 +3,7 @@ const getRandomTableCellIndex = (sizeOfBoard) => {
 };
 
 // ===================================================
-const myObj = {
+const answerObj = {
   red: 0,
   blue: 0,
   green: 0,
@@ -58,7 +58,7 @@ const enableInputFields = () => {
   greenInput.removeAttribute("disabled");
   submitBtn.removeAttribute("disabled");
   // ! UNCOMMENT TO DISPLAY OBJECT IN CONSOLE
-  console.log("My object", myObj);
+  console.log("Answer object", answerObj);
 };
 
 const setClassName = (element, className, addClassName = true) => {
@@ -81,31 +81,57 @@ const createRandomColouredSquare = (randomSquare) => {
   const randomNum = Math.random();
   if (randomNum < 0.3) {
     setClassName(randomSquare, "red");
-    myObj.red += 1;
+    answerObj.red += 1;
   } else if (randomNum >= 0.3 && randomNum <= 0.6) {
     setClassName(randomSquare, "blue");
-    myObj.blue += 1;
+    answerObj.blue += 1;
   } else {
     setClassName(randomSquare, "green");
-    myObj.green += 1;
+    answerObj.green += 1;
+  }
+};
+
+const generateRandomColour = () => {
+  const randomNum = Math.random();
+  if (randomNum < 0.3) {
+    return "red";
+  } else if (randomNum >= 0.3 && randomNum <= 0.6) {
+    return "blue";
+  } else {
+    return "green";
   }
 };
 
 const generateSquares = () => {
+  let prevRandomSquareIdx = -1;
+  let prevRandomSquareColour = "";
   for (let i = 0; i <= numOfSquares; i++) {
     setTimeout(
       () => {
         if (i === numOfSquares) {
           enableInputFields();
         } else {
-          // ! Add logic here that stores previous index and colour, if same, changes it
-          const randomSquare =
-            table.getElementsByTagName("td")[
-              getRandomTableCellIndex(boardSize)
-            ];
-          createRandomColouredSquare(randomSquare);
+          while (true) {
+            const randomSquare =
+              table.getElementsByTagName("td")[
+                getRandomTableCellIndex(boardSize)
+              ];
+            const randomColour = generateRandomColour();
 
-          setTimeout(removeRandomColouredSquare, delayTime, randomSquare);
+            if (
+              prevRandomSquareIdx === randomSquare &&
+              prevRandomSquareColour === randomColour
+            ) {
+              continue;
+              // Only generate a random square if current colour and index is not the same as last iteration
+            } else {
+              prevRandomSquareIdx = randomSquare;
+              prevRandomSquareColour = randomColour;
+              createRandomColouredSquare(randomSquare);
+              setTimeout(removeRandomColouredSquare, delayTime, randomSquare);
+              break;
+            }
+          }
         }
       },
       (i + 1) * delayTime,
@@ -128,9 +154,9 @@ const startGame = () => {
 
 const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
   // Reset Object
-  myObj.red = 0;
-  myObj.green = 0;
-  myObj.blue = 0;
+  answerObj.red = 0;
+  answerObj.green = 0;
+  answerObj.blue = 0;
   if (!endOfGame) {
     // Hide Game page
     gameWrapper.style.display = "none";
@@ -196,9 +222,9 @@ answerForm.addEventListener("submit", (e) => {
   e.preventDefault();
   // Correct answer
   if (
-    +redInput.value === myObj.red &&
-    +blueInput.value === myObj.blue &&
-    +greenInput.value === myObj.green
+    +redInput.value === answerObj.red &&
+    +blueInput.value === answerObj.blue &&
+    +greenInput.value === answerObj.green
   ) {
     correctIncorrectTextWrapper.classList.remove("hidden");
     correctIncorrectText.textContent = "Congratulations!";
@@ -215,10 +241,10 @@ answerForm.addEventListener("submit", (e) => {
       redInput.value = "0";
       blueInput.value = "0";
       greenInput.value = "0";
-      // Reset myObj to 0
-      myObj.red = 0;
-      myObj.blue = 0;
-      myObj.green = 0;
+      // Reset answerObj to 0
+      answerObj.red = 0;
+      answerObj.blue = 0;
+      answerObj.green = 0;
       // Show incorrect text at the bottom
       correctIncorrectTextWrapper.classList.remove("hidden");
       correctIncorrectText.textContent = "Incorrect!";
