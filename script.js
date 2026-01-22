@@ -61,6 +61,36 @@ const enableInputFields = () => {
   console.log("My object", myObj);
 };
 
+const setClassName = (element, className, addClassName = true) => {
+  addClassName
+    ? element.classList.add(className)
+    : element.classList.remove(className);
+};
+
+const removeRandomColouredSquare = (randomSquare) => {
+  if (randomSquare.classList.contains("red")) {
+    setClassName(randomSquare, "red", false);
+  } else if (randomSquare.classList.contains("blue")) {
+    setClassName(randomSquare, "blue", false);
+  } else {
+    setClassName(randomSquare, "green", false);
+  }
+};
+
+const createRandomColouredSquare = (randomSquare) => {
+  const randomNum = Math.random();
+  if (randomNum < 0.3) {
+    setClassName(randomSquare, "red");
+    myObj.red += 1;
+  } else if (randomNum >= 0.3 && randomNum <= 0.6) {
+    setClassName(randomSquare, "blue");
+    myObj.blue += 1;
+  } else {
+    setClassName(randomSquare, "green");
+    myObj.green += 1;
+  }
+};
+
 const generateSquares = () => {
   for (let i = 0; i < numOfSquares; i++) {
     setTimeout(
@@ -68,29 +98,12 @@ const generateSquares = () => {
         if (i === numOfSquares - 1) {
           setTimeout(enableInputFields, (i + 1) * delayTime);
         }
+        // ! Add logic here that stores previous index and colour, if same, changes it
         const randomSquare =
           table.getElementsByTagName("td")[getRandomTableCellIndex(boardSize)];
-        const randomNum = Math.random();
-        if (randomNum < 0.3) {
-          randomSquare.classList.add("red");
-          myObj.red += 1;
-        } else if (randomNum >= 0.3 && randomNum <= 0.6) {
-          randomSquare.classList.add("blue");
-          myObj.blue += 1;
-        } else {
-          randomSquare.classList.add("green");
-          myObj.green += 1;
-        }
+        createRandomColouredSquare(randomSquare);
 
-        setTimeout(() => {
-          if (randomSquare.classList.contains("red")) {
-            randomSquare.classList.remove("red");
-          } else if (randomSquare.classList.contains("blue")) {
-            randomSquare.classList.remove("blue");
-          } else {
-            randomSquare.classList.remove("green");
-          }
-        }, delayTime);
+        setTimeout(removeRandomColouredSquare, delayTime, randomSquare);
       },
       (i + 1) * delayTime,
     );
@@ -140,11 +153,30 @@ const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
   nextLvlOrEndGameBtn.classList.add("hidden");
 };
 
+const updateCorrectIncorrectText = () => {
+  for (let i = delayBeforeRestartingALevel; i >= 0; i--) {
+    setTimeout(
+      () => {
+        if (i === 0) {
+          // On last iteration generate squares and hide text content
+          correctIncorrectTextWrapper.classList.add("hidden");
+          correctIncorrectText.textContent = "";
+          generateSquares();
+        } else {
+          // Dynamically show text at bottom of game board
+          correctIncorrectText.textContent = `Incorrect! Restarting level in ${i} seconds...`;
+        }
+      },
+      (delayBeforeRestartingALevel + 1 - i) * 1000, // Count up from 0 onwards
+    );
+  }
+};
+
 // ===================================================
 startGameBtn.addEventListener("click", startGame);
 nextLvlOrEndGameBtn.addEventListener("click", () => {
   if (nextLvlOrEndGameBtn.textContent === endGameText) {
-    resetStyles("");
+    resetStyles();
     // Reset number of squares
     numOfSquares = 3;
   } else if (nextLvlOrEndGameBtn.textContent === nextLevelText) {
@@ -189,23 +221,7 @@ answerForm.addEventListener("submit", (e) => {
       correctIncorrectText.textContent = "Incorrect!";
       // Update number of lives remaining text
       numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
-      // Dynamically show when the level will be restarted
-      for (let i = delayBeforeRestartingALevel; i >= 0; i--) {
-        setTimeout(
-          () => {
-            if (i === 0) {
-              // On last iteration generate squares and hide text content
-              correctIncorrectTextWrapper.classList.add("hidden");
-              correctIncorrectText.textContent = "";
-              generateSquares();
-            } else {
-              // Dynamically show text at bottom of game board
-              correctIncorrectText.textContent = `Incorrect! Restarting level in ${i} seconds...`;
-            }
-          },
-          (delayBeforeRestartingALevel + 1 - i) * 1000, // Count up from 0 onwards
-        );
-      }
+      updateCorrectIncorrectText();
     } else {
       // No lives remaining
       numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
