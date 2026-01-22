@@ -13,6 +13,23 @@
   }
 }
 
+$table-color: lightblue;
+$red: red;
+$blue: blue;
+$green: green;
+
+.red {
+  background-color: $red;
+}
+
+.blue {
+  background-color: $blue;
+}
+
+.green {
+  background-color: $green;
+}
+
 @mixin flexbox-styling(
   $align-items: center,
   $justify-content: center,
@@ -49,6 +66,10 @@ p {
   padding-inline: 2ch;
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
 // END GENERAL
 
@@ -112,7 +133,7 @@ p {
 // GAME BOARD
 .game-wrapper {
   @include flexbox-styling($flex-direction: column);
-  display: none;
+  // display: none;
   width: min(90%, 600px);
   margin-inline: auto;
 
@@ -158,13 +179,14 @@ p {
   font-size: 1.2rem;
 }
 
-// END GAME BOARD
-
 table {
+  background-color: $table-color;
   td {
-    $dimension: 4em;
-    border: 1px solid black;
-    inline-size: $dimension;
+    $dimension: 3em;
+    inline-size: $dimension + 2;
     block-size: $dimension;
+    background-color: $table-color;
   }
 }
+
+// END GAME BOARD

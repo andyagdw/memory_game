@@ -14,10 +14,12 @@
         <h1>Memory Game</h1>
       </header>
       <main>
-        <div class="home-page-wrapper">
+        <div class="home-page-wrapper js-home-page-wrapper">
           <div class="play-game-btn-wrapper">
             <div>
-              <button class="button button--play-game">Start Game</button>
+              <button class="button button--play-game js-button--play-game">
+                Start Game
+              </button>
             </div>
             <div>
               <button
@@ -43,7 +45,7 @@
               <p>How good is your memory?</p>
             </hgroup>
             <p>
-              Red, Blue, Green squares appear randomly on a 3 x 3 grid one after
+              Red, Blue, Green squares appear randomly on a 4 x 4 grid one after
               the other when a game has started. They are visible for around one
               second and then disappears.
             </p>
@@ -83,11 +85,13 @@
           <!-- END HOW TO PLAY GUIDE -->
         </div>
         <!-- GAME BOARD -->
-        <div class="game-wrapper">
-          <h2 class="game-wrapper__heading">Level 1</h2>
+        <div class="game-wrapper js-game-wrapper hidden">
+          <!-- !UPDATE TEXT -->
+          <h2 class="game-wrapper__heading js-game-wrapper__heading"></h2>
           <div class="game-wrapper__board game-board">
-            <table>
+            <table class="js-table">
               <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -96,8 +100,16 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
               </tr>
               <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -106,7 +118,10 @@
           </div>
           <!-- ANSWER FORM -->
           <div class="form-wrapper">
-            <form aria-label="Type in Answers" class="answer-form">
+            <form
+              aria-label="Type in Answers"
+              class="answer-form js-answer-form"
+            >
               <div class="answer-form__input-wrapper">
                 <label for="red-squares">Number of red squares:</label>
                 <input
@@ -116,6 +131,7 @@
                   name="red-squares"
                   required
                   inputmode="numeric"
+                  disabled
                 />
               </div>
               <div class="answer-form__input-wrapper">
@@ -127,6 +143,7 @@
                   name="blue-squares"
                   required
                   inputmode="numeric"
+                  disabled
                 />
               </div>
               <div class="answer-form__input-wrapper">
@@ -138,21 +155,30 @@
                   name="green-squares"
                   required
                   inputmode="numeric"
+                  disabled
                 />
               </div>
               <div class="answer-form__btn-wrapper">
-                <button type="submit" class="button button--submit">
+                <button
+                  type="submit"
+                  class="button button--submit js-button--submit"
+                  disabled
+                >
                   Submit
                 </button>
-                <button type="button" class="button--next-level button">
-                  Next Level
+                <button
+                  type="button"
+                  class="button--next-level js-button--next-level button hidden"
+                >
+                  <!-- !UPDATE TEXT -->
                 </button>
               </div>
             </form>
           </div>
           <!-- End ANSWER FORM -->
-          <div>
-            <p class="correct-incorrect-text">Congratulations!</p>
+          <div class="hidden js-correct-incorrect-text-wrapper">
+            <!-- ! UPDATE TEXT -->
+            <p class="correct-incorrect-text js-correct-incorrect-text"></p>
           </div>
         </div>
         <!-- End GAME BOARD -->

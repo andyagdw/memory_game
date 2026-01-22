@@ -12,6 +12,18 @@
     block-size: 100%;
   }
 }
+.red {
+  background-color: red;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.green {
+  background-color: green;
+}
+
 .header {
   padding-block: 1em;
   padding-inline: 2em;
@@ -36,6 +48,10 @@ p {
   padding-inline: 2ch;
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
 
 .home-page-wrapper {
@@ -95,7 +111,6 @@ p {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  display: none;
   width: min(90%, 600px);
   margin-inline: auto;
 }
@@ -140,8 +155,11 @@ p {
   font-size: 1.2rem;
 }
 
+table {
+  background-color: lightblue;
+}
 table td {
-  border: 1px solid black;
-  inline-size: 4em;
-  block-size: 4em;
+  inline-size: 5em;
+  block-size: 3em;
+  background-color: lightblue;
 }
