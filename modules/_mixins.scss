@@ -1,0 +1,29 @@
+@mixin flexbox-styling(
+  $align-items: center,
+  $justify-content: center,
+  $flex-direction: row
+) {
+  display: flex;
+  align-items: $align-items;
+  justify-content: $justify-content;
+  flex-direction: $flex-direction;
+}
+
+@mixin body-bg-styling($url) {
+  background-image: url($url);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(
+      to bottom,
+      rgb(0 0 0 / 0.6),
+      rgb(0 0 0 / 0.9)
+    );
+  }
+}

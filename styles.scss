@@ -1,3 +1,6 @@
+@use "./modules/variables";
+@use "./modules/mixins";
+
 @layer reset {
   *,
   *::before,
@@ -12,15 +15,11 @@
     block-size: 100%;
   }
 
-  button {
+  button,
+  input {
     font: inherit;
   }
 }
-
-$table-color: lightblue;
-$red: red;
-$blue: blue;
-$green: green;
 
 // GENERAL
 ::view-transition-old(root),
@@ -29,23 +28,23 @@ $green: green;
 }
 
 .red {
-  background-color: $red;
+  background-color: variables.$red;
 }
 
 .blue {
-  background-color: $blue;
+  background-color: variables.$blue;
 }
 
 .green {
-  background-color: $green;
+  background-color: variables.$green;
 }
 
 .correct-answer {
-  color: $green;
+  color: variables.$green;
 }
 
 .incorrect-answer {
-  color: $red;
+  color: variables.$red;
 }
 
 // GOOGLE FONT
@@ -60,47 +59,17 @@ $green: green;
     "ELSH" 0,
     "ELXP" 0;
 }
-
-@mixin flexbox-styling(
-  $align-items: center,
-  $justify-content: center,
-  $flex-direction: row
-) {
-  display: flex;
-  align-items: $align-items;
-  justify-content: $justify-content;
-  flex-direction: $flex-direction;
-}
-
-@mixin body-bg-styling($url) {
-  background-image: url($url);
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: cover;
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background-image: linear-gradient(
-      to bottom,
-      rgb(0 0 0 / 0.6),
-      rgb(0 0 0 / 0.9)
-    );
-  }
-}
-
+// END GOOGLE FONT
 body {
-  color: white;
+  color: variables.$white;
 }
 
 body.home-page-body {
-  @include body-bg-styling("./images/landing_page.png");
+  @include mixins.body-bg-styling("./images/landing_page.png");
 }
 
 body.game-page-body {
-  @include body-bg-styling("./images/game_page.png");
+  @include mixins.body-bg-styling("./images/game_page.png");
 }
 
 .header {
@@ -114,7 +83,7 @@ body.game-page-body {
 }
 
 .footer {
-  padding-block-start: 1em;
+  padding-block: 1.6em;
   padding-inline: 2em;
   background-image: linear-gradient(to bottom, rgb(0 0 0 / 0.8));
 }
@@ -134,28 +103,72 @@ p {
   padding-inline: 2ch;
   font-size: 1.2rem;
   cursor: pointer;
+  color: variables.$black;
+  background-color: variables.$white;
+
+  &:disabled {
+    background-color: variables.$grey;
+  }
+
+  &--play-game {
+    font-size: 1.6rem;
+    border: 4px solid transparent;
+    background:
+      linear-gradient(variables.$white, variables.$white) padding-box,
+      conic-gradient(
+          from var(--rotation),
+          red,
+          green,
+          yellow,
+          blue,
+          purple,
+          red
+        )
+        border-box;
+    animation: 30s color-rotation infinite;
+    box-shadow: 5px 5px 10px variables.$black;
+    border-radius: 0.5rem;
+  }
+
+  &--how-to-play {
+    box-shadow: 5px 5px 10px variables.$black;
+    border: none;
+  }
+
+  &--submit,
+  &--next-lvl-or-end-game {
+    font-size: 1rem;
+  }
+
+  &--next-lvl-or-end-game {
+    font-weight: 500;
+  }
+
+  &.end-game-style {
+    background-color: variables.$red;
+    color: variables.$white;
+  }
+
+  &.next-level-style {
+    background-color: variables.$blue;
+    color: variables.$white;
+  }
 }
 
 .hidden {
   display: none;
 }
-
 // END GENERAL
 
 // HOME PAGE
 .home-page-wrapper {
   block-size: 100%;
-  // display: none;
 }
 
 .play-game-btn-wrapper {
-  @include flexbox-styling($flex-direction: column);
+  @include mixins.flexbox-styling($flex-direction: column);
   row-gap: 5em;
   block-size: 100%;
-}
-
-.button--play-game {
-  font-size: 1.6rem;
 }
 
 .dialog {
@@ -196,12 +209,11 @@ p {
     }
   }
 }
-
 // END HOME PAGE
 
 // GAME BOARD
 .game-wrapper {
-  @include flexbox-styling($flex-direction: column);
+  @include mixins.flexbox-styling($flex-direction: column);
   // Override display flex
   display: none;
   inline-size: min(90%, 600px);
@@ -239,16 +251,18 @@ p {
     padding-inline-start: 0.5em;
     padding-block: 0.8em;
     inline-size: 100%;
+    background-color: rgb(from variables.$black r g b / calc(alpha - 0.4));
+    border-radius: 0.5rem;
+    color: inherit;
+
+    &:disabled {
+      background-color: variables.$grey;
+    }
   }
 }
 
 .answer-form__btn-wrapper {
-  @include flexbox-styling($justify-content: space-between);
-}
-
-.button--submit,
-.button--next-lvl-or-end-game {
-  font-size: 1rem;
+  @include mixins.flexbox-styling($justify-content: space-between);
 }
 
 .correct-incorrect-text {
@@ -257,13 +271,21 @@ p {
 }
 
 table {
-  background-color: $table-color;
+  background-color: variables.$table-color;
   td {
     $dimension: 3em;
     inline-size: $dimension + 2;
     block-size: $dimension;
-    background-color: $table-color;
+    background-color: variables.$table-color;
   }
 }
-
 // END GAME BOARD
+
+@keyframes color-rotation {
+  from {
+    --rotation: 0turn;
+  }
+  to {
+    --rotation: 1turn;
+  }
+}

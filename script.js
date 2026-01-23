@@ -142,8 +142,8 @@ const generateSquares = () => {
 
 const updateBodyBackground = () => {
   if (body.classList.contains("home-page-body")) {
-    body.classList.remove("home-page-body");
-    body.classList.add("game-page-body");
+    setClassName(body, "home-page-body", false);
+    setClassName(body, "game-page-body");
   }
 };
 
@@ -168,29 +168,41 @@ const startGame = () => {
   generateSquares();
 };
 
+const endGameResetStyles = () => {
+  // Hide Game page
+  gameWrapper.style.display = "none";
+  // Display home page
+  homePageWrapper.style.display = "block";
+  // Reset level
+  levelVal = 1;
+  // Reset number of lives remaining
+  numOfLivesRemaining = 3;
+  // Reset text colour
+  if (correctIncorrectText.classList.contains("incorrect-answer")) {
+    setClassName(correctIncorrectText, "incorrect-answer", false);
+  }
+  if (body.classList.contains("game-page-body")) {
+    // Add original body background
+    setClassName(body, "game-page-body", false);
+    setClassName(body, "home-page-body");
+  }
+  // Remove end game button style
+  if (nextLvlOrEndGameBtn.classList.contains("end-game-style")) {
+    setClassName(nextLvlOrEndGameBtn, "end-game-style", false);
+  }
+};
+
 const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
   // Reset Object
   answerObj.red = 0;
   answerObj.green = 0;
   answerObj.blue = 0;
   if (!endOfGame) {
-    // Hide Game page
-    gameWrapper.style.display = "none";
-    // Display home page
-    homePageWrapper.style.display = "block";
-    // Reset level
-    levelVal = 1;
-    // Reset number of lives remaining
-    numOfLivesRemaining = 3;
-    // Reset text colour
-    if (correctIncorrectText.classList.contains("incorrect-answer")) {
-      correctIncorrectText.classList.remove("incorrect-answer");
-    }
-    if (body.classList.contains("game-page-body")) {
-      // Add original body background
-      body.classList.remove("game-page-body");
-      body.classList.add("home-page-body");
-    }
+    endGameResetStyles();
+  }
+  // Remove next level button style
+  if (nextLvlOrEndGameBtn.classList.contains("next-level-style")) {
+    setClassName(nextLvlOrEndGameBtn, "next-level-style", false);
   }
   // Update level text
   if (!document.startViewTransition) {
@@ -208,9 +220,9 @@ const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
   blueInput.setAttribute("disabled", true);
   greenInput.setAttribute("disabled", true);
   // Hide 'correct incorrect text' and next level button
-  correctIncorrectTextWrapper.classList.add("hidden");
+  setClassName(correctIncorrectTextWrapper, "hidden");
   correctIncorrectText.textContent = "";
-  nextLvlOrEndGameBtn.classList.add("hidden");
+  setClassName(nextLvlOrEndGameBtn, "hidden");
 };
 
 const updateCorrectIncorrectText = () => {
@@ -219,7 +231,7 @@ const updateCorrectIncorrectText = () => {
       () => {
         if (i === 0) {
           // On last iteration generate squares and hide text content
-          correctIncorrectTextWrapper.classList.add("hidden");
+          setClassName(correctIncorrectTextWrapper, "hidden");
           correctIncorrectText.textContent = "";
           generateSquares();
         } else {
@@ -257,13 +269,15 @@ answerForm.addEventListener("submit", (e) => {
     +blueInput.value === answerObj.blue &&
     +greenInput.value === answerObj.green
   ) {
-    correctIncorrectTextWrapper.classList.remove("hidden");
+    setClassName(correctIncorrectTextWrapper, "hidden", false);
     correctIncorrectText.textContent = "Congratulations!";
-    correctIncorrectText.classList.add("correct-answer");
-    nextLvlOrEndGameBtn.classList.remove("hidden");
+    setClassName(correctIncorrectText, "correct-answer");
+    setClassName(nextLvlOrEndGameBtn, "hidden", false);
     nextLvlOrEndGameBtn.textContent = nextLevelText;
-    // Wrong answer
+    // Update next level button classname
+    setClassName(nextLvlOrEndGameBtn, "next-level-style");
   } else {
+    // Wrong answer
     --numOfLivesRemaining;
     if (numOfLivesRemaining > 0) {
       // Reset input fields and set to disabled
@@ -278,20 +292,22 @@ answerForm.addEventListener("submit", (e) => {
       answerObj.blue = 0;
       answerObj.green = 0;
       // Show incorrect text at the bottom
-      correctIncorrectTextWrapper.classList.remove("hidden");
+      setClassName(correctIncorrectTextWrapper, "hidden", false);
       // Remove correct colour text, if present
       if (correctIncorrectText.classList.contains("correct-answer")) {
-        correctIncorrectText.classList.remove("correct-answer");
+        setClassName(correctIncorrectText, "correct-answer", false);
       }
       correctIncorrectText.textContent = "Incorrect!";
       updateCorrectIncorrectText();
     } else {
       // No lives remaining
-      correctIncorrectTextWrapper.classList.remove("hidden");
+      setClassName(correctIncorrectTextWrapper, "hidden", false);
       correctIncorrectText.textContent = "Game over!";
-      correctIncorrectText.classList.add("incorrect-answer");
-      nextLvlOrEndGameBtn.classList.remove("hidden");
+      setClassName(correctIncorrectText, "incorrect-answer");
+      setClassName(nextLvlOrEndGameBtn, "hidden", false);
       nextLvlOrEndGameBtn.textContent = endGameText;
+      // Update end game button classname
+      setClassName(nextLvlOrEndGameBtn, "end-game-style");
     }
     // Update number of lives remaining text
     if (!document.startViewTransition) {
