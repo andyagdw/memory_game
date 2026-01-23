@@ -64,41 +64,17 @@ body {
 }
 
 body.home-page-body {
-  @include mixins.body-bg-styling("./images/landing_page.png");
+  @include mixins.body-bg-styling("./assets/landing_page.png");
 }
 
 body.game-page-body {
-  @include mixins.body-bg-styling("./images/game_page.png");
-}
-
-:root:has(body.game-page-body),
-body.game-page-body
-// Prevents white space between answer form and footer
-{
-  block-size: initial;
-}
-
-:root:has(body.home-page-body),
-body.home-page-body
-// Prevents white space between answer form and footer
-{
-  block-size: 100%;
+  @include mixins.body-bg-styling("./assets/game_page.png");
 }
 
 .wrapper {
-  min-height: 100%;
+  min-block-size: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-}
-
-.header {
-  padding-block: 1em;
-  padding-inline: 2em;
-
-  &__heading {
-    font-weight: 500;
-    font-size: clamp(1.6rem, 6vw, 2.5rem);
-  }
+  grid-template-rows: 1fr auto;
 }
 
 .footer {
@@ -179,8 +155,20 @@ p {
 
 .play-game-btn-wrapper {
   @include mixins.flexbox-styling($flex-direction: column);
-  row-gap: 5em;
+  row-gap: 2.5em;
   block-size: 100%;
+
+  &__heading {
+    font-size: clamp(2.2rem, 8vw, 3rem);
+    text-align: center;
+    @media (prefers-reduced-motion: no-preference) {
+      animation: bounce 1100ms ease infinite;
+    }
+  }
+
+  &__span {
+    color: hsl(24, 74%, 49%);
+  }
 }
 
 .dialog {
@@ -231,6 +219,7 @@ p {
   display: none;
   inline-size: min(90%, 600px);
   margin-inline: auto;
+  padding-block: 2.5em;
 
   &__heading {
     margin-block: 1em;
@@ -300,5 +289,17 @@ table {
   }
   to {
     --rotation: 1turn;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0px);
   }
 }

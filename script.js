@@ -59,7 +59,7 @@ const enableInputFields = () => {
   greenInput.removeAttribute("disabled");
   submitBtn.removeAttribute("disabled");
   // ! UNCOMMENT TO DISPLAY OBJECT IN CONSOLE
-  console.log("Answer object", answerObj);
+  // console.log("Answer object", answerObj);
 };
 
 const setClassName = (element, className, addClassName = true) => {
