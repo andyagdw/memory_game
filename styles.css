@@ -94,7 +94,7 @@ body.game-page-body::before {
 }
 .header__heading {
   font-weight: 500;
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 6vw, 2.5rem);
 }
 
 .footer {
@@ -174,13 +174,26 @@ p {
   padding-block: 2.5em;
   inline-size: min(90%, 600px);
   position: relative;
+  background-color: rgb(from black r g calc(b + 10));
+  color: white;
 }
 .dialog__heading {
   margin-block-end: 0.5em;
 }
+@media (width >= 200px) {
+  .dialog__heading {
+    width: 15ch;
+  }
+}
+@media (width >= 500px) {
+  .dialog__heading {
+    width: fit-content;
+  }
+}
 .dialog__list {
   margin-block-end: 1em;
   list-style-type: circle;
+  list-style-position: inside;
 }
 
 .dialog-list__item {
@@ -197,10 +210,12 @@ p {
   position: absolute;
   inset-block-start: 1em;
   inset-inline-end: 1em;
+  background-color: rgb(from black r g calc(b + 40));
 }
 .dialog__close-btn-wrapper button::before {
   content: " ×";
   font-size: 1.5rem;
+  color: white;
 }
 
 .game-wrapper {
