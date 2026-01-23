@@ -103,7 +103,7 @@ const generateRandomColour = () => {
   }
 };
 
-const generateSquares = () => {
+const generateSquare = () => {
   let prevRandomSquareIdx = -1;
   let prevRandomSquareColour = "";
   for (let i = 0; i <= numOfSquares; i++) {
@@ -165,7 +165,7 @@ const startGame = () => {
     });
   }
   // Start generating random squares
-  generateSquares();
+  generateSquare();
 };
 
 const endGameResetStyles = () => {
@@ -233,7 +233,7 @@ const updateCorrectIncorrectText = () => {
           // On last iteration generate squares and hide text content
           setClassName(correctIncorrectTextWrapper, "hidden");
           correctIncorrectText.textContent = "";
-          generateSquares();
+          generateSquare();
         } else {
           // Dynamically show text at bottom of game board
           correctIncorrectText.textContent = `Incorrect! Restarting level in ${i} seconds...`;
@@ -256,7 +256,7 @@ nextLvlOrEndGameBtn.addEventListener("click", () => {
     // Increase number of squares by 1
     ++numOfSquares;
     // Generate next game squares
-    generateSquares();
+    generateSquare();
   } else {
     return;
   }

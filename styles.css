@@ -12,10 +12,6 @@
     padding: 0;
     box-sizing: border-box;
   }
-  html,
-  body {
-    block-size: 100%;
-  }
   button,
   input {
     font: inherit;
@@ -26,26 +22,6 @@
   animation-duration: 1s;
 }
 
-.red {
-  background-color: red;
-}
-
-.blue {
-  background-color: blue;
-}
-
-.green {
-  background-color: green;
-}
-
-.correct-answer {
-  color: green;
-}
-
-.incorrect-answer {
-  color: red;
-}
-
 .bitcount-single-google-font {
   font-family: "Bitcount Single", system-ui;
   font-optical-sizing: auto;
@@ -54,8 +30,28 @@
   font-variation-settings: "slnt" 0, "CRSV" 0.5, "ELSH" 0, "ELXP" 0;
 }
 
+.red {
+  background-color: hsl(0, 81%, 44%);
+}
+
+.blue {
+  background-color: hsl(240, 82%, 54%);
+}
+
+.green {
+  background-color: hsl(120, 85%, 33%);
+}
+
+.correct-answer {
+  color: hsl(120, 85%, 33%);
+}
+
+.incorrect-answer {
+  color: hsl(0, 81%, 44%);
+}
+
 body {
-  color: white;
+  color: hsl(60, 24%, 96%);
 }
 
 body.home-page-body {
@@ -88,6 +84,22 @@ body.game-page-body::before {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9));
 }
 
+:root:has(body.game-page-body),
+body.game-page-body {
+  block-size: initial;
+}
+
+:root:has(body.home-page-body),
+body.home-page-body {
+  block-size: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
 .header {
   padding-block: 1em;
   padding-inline: 2em;
@@ -100,17 +112,10 @@ body.game-page-body::before {
 .footer {
   padding-block: 1.6em;
   padding-inline: 2em;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8));
 }
 
 p {
   margin-block-end: 1.5rem;
-}
-
-.wrapper {
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
 }
 
 .button {
@@ -118,22 +123,22 @@ p {
   padding-inline: 2ch;
   font-size: 1.2rem;
   cursor: pointer;
-  color: black;
-  background-color: white;
+  color: hsl(0, 0%, 0%);
+  background-color: hsl(60, 24%, 96%);
 }
 .button:disabled {
-  background-color: grey;
+  background-color: hsl(0, 0%, 50%);
 }
 .button--play-game {
   font-size: 1.6rem;
   border: 4px solid transparent;
-  background: linear-gradient(white, white) padding-box, conic-gradient(from var(--rotation), red, green, yellow, blue, purple, red) border-box;
+  background: linear-gradient(hsl(60, 24%, 96%), hsl(60, 24%, 96%)) padding-box, conic-gradient(from var(--rotation), red, green, yellow, blue, purple, red) border-box;
   animation: 30s color-rotation infinite;
-  box-shadow: 5px 5px 10px black;
+  box-shadow: 5px 5px 10px hsl(0, 0%, 0%);
   border-radius: 0.5rem;
 }
 .button--how-to-play {
-  box-shadow: 5px 5px 10px black;
+  box-shadow: 5px 5px 10px hsl(0, 0%, 0%);
   border: none;
 }
 .button--submit, .button--next-lvl-or-end-game {
@@ -143,12 +148,12 @@ p {
   font-weight: 500;
 }
 .button.end-game-style {
-  background-color: red;
-  color: white;
+  background-color: hsl(0, 81%, 44%);
+  color: hsl(60, 24%, 96%);
 }
 .button.next-level-style {
-  background-color: blue;
-  color: white;
+  background-color: hsl(240, 82%, 54%);
+  color: hsl(60, 24%, 96%);
 }
 
 .hidden {
@@ -174,8 +179,8 @@ p {
   padding-block: 2.5em;
   inline-size: min(90%, 600px);
   position: relative;
-  background-color: rgb(from black r g calc(b + 10));
-  color: white;
+  background-color: rgb(from hsl(0, 0%, 0%) r g calc(b + 10));
+  color: hsl(60, 24%, 96%);
 }
 .dialog__heading {
   margin-block-end: 0.5em;
@@ -190,15 +195,6 @@ p {
     width: fit-content;
   }
 }
-.dialog__list {
-  margin-block-end: 1em;
-  list-style-type: circle;
-  list-style-position: inside;
-}
-
-.dialog-list__item {
-  margin-block-end: 0.5em;
-}
 
 .dialog__close-btn-wrapper {
   display: flex;
@@ -210,12 +206,12 @@ p {
   position: absolute;
   inset-block-start: 1em;
   inset-inline-end: 1em;
-  background-color: rgb(from black r g calc(b + 40));
+  background-color: rgb(from hsl(0, 0%, 0%) r g calc(b + 40));
 }
 .dialog__close-btn-wrapper button::before {
   content: " ×";
   font-size: 1.5rem;
-  color: white;
+  color: hsl(60, 24%, 96%);
 }
 
 .game-wrapper {
@@ -228,7 +224,7 @@ p {
   margin-inline: auto;
 }
 .game-wrapper__heading {
-  margin-block-end: 0.5em;
+  margin-block: 1em;
 }
 .game-wrapper__board {
   margin-block-end: 0.8em;
@@ -255,12 +251,12 @@ p {
   padding-inline-start: 0.5em;
   padding-block: 0.8em;
   inline-size: 100%;
-  background-color: rgb(from black r g b/calc(alpha - 0.4));
+  background-color: rgb(from hsl(0, 0%, 0%) r g b/calc(alpha - 0.4));
   border-radius: 0.5rem;
   color: inherit;
 }
 .answer-form__input-wrapper input:disabled {
-  background-color: grey;
+  background-color: hsl(0, 0%, 50%);
 }
 
 .answer-form__btn-wrapper {
@@ -276,12 +272,12 @@ p {
 }
 
 table {
-  background-color: lightblue;
+  background-color: hsl(195, 53%, 79%);
 }
 table td {
   inline-size: 5em;
   block-size: 3em;
-  background-color: lightblue;
+  background-color: hsl(195, 53%, 79%);
 }
 
 @keyframes color-rotation {

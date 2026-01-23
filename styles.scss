@@ -10,11 +10,6 @@
     box-sizing: border-box;
   }
 
-  html,
-  body {
-    block-size: 100%;
-  }
-
   button,
   input {
     font: inherit;
@@ -25,26 +20,6 @@
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 1s;
-}
-
-.red {
-  background-color: variables.$red;
-}
-
-.blue {
-  background-color: variables.$blue;
-}
-
-.green {
-  background-color: variables.$green;
-}
-
-.correct-answer {
-  color: variables.$green;
-}
-
-.incorrect-answer {
-  color: variables.$red;
 }
 
 // GOOGLE FONT
@@ -60,6 +35,30 @@
     "ELXP" 0;
 }
 // END GOOGLE FONT
+
+// COLOURS FOR SQUARES
+.red {
+  background-color: variables.$red;
+}
+
+.blue {
+  background-color: variables.$blue;
+}
+
+.green {
+  background-color: variables.$green;
+}
+// END COLOURS FOR SQUARES
+
+// COLOURS FOR TEXT THAT APPEARS UNDER FORM - WHETHER ANSWER WAS CORRECT OR NOT
+.correct-answer {
+  color: variables.$green;
+}
+
+.incorrect-answer {
+  color: variables.$red;
+}
+// END COLOURS FOR TEXT...
 body {
   color: variables.$white;
 }
@@ -70,6 +69,26 @@ body.home-page-body {
 
 body.game-page-body {
   @include mixins.body-bg-styling("./images/game_page.png");
+}
+
+:root:has(body.game-page-body),
+body.game-page-body
+// Prevents white space between answer form and footer
+{
+  block-size: initial;
+}
+
+:root:has(body.home-page-body),
+body.home-page-body
+// Prevents white space between answer form and footer
+{
+  block-size: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .header {
@@ -85,17 +104,10 @@ body.game-page-body {
 .footer {
   padding-block: 1.6em;
   padding-inline: 2em;
-  background-image: linear-gradient(to bottom, rgb(0 0 0 / 0.8));
 }
 
 p {
   margin-block-end: 1.5rem;
-}
-
-.wrapper {
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
 }
 
 .button {
@@ -189,16 +201,6 @@ p {
       width: fit-content;
     }
   }
-
-  &__list {
-    margin-block-end: 1em;
-    list-style-type: circle;
-    list-style-position: inside;
-  }
-}
-
-.dialog-list__item {
-  margin-block-end: 0.5em;
 }
 
 .dialog__close-btn-wrapper {
@@ -231,7 +233,7 @@ p {
   margin-inline: auto;
 
   &__heading {
-    margin-block-end: 0.5em;
+    margin-block: 1em;
   }
 
   &__board {
