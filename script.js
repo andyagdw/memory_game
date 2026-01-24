@@ -9,9 +9,12 @@ const answerObj = {
   green: 0,
 };
 
-let levelVal = 1; // The level the user is currently on
-let numOfSquares = 3; // The default number of squares to generate for level 1
-let numOfLivesRemaining = 3;
+const LEVEL_VAL = 1;
+const NUM_OF_SQUARES = 3;
+const NUM_OF_LIVES_REMAINING = 12;
+let levelVal = LEVEL_VAL; // The level the user is currently on
+let numOfSquares = NUM_OF_SQUARES; // The default number of squares to generate for level 1
+let numOfLivesRemaining = NUM_OF_LIVES_REMAINING;
 const boardSize = 4;
 const endGameText = "End Game";
 const nextLevelText = "Next";
@@ -51,6 +54,9 @@ const numOfLivesHeading = document.querySelector(
   ".js-game-wrapper__num-of-lives-heading",
 );
 const body = document.querySelector("body");
+const displayCorrectAnswerPara = document.querySelector(
+  ".js-correct-incorrect-text-wrapper__display-correct-answer",
+);
 // ===================================================
 const enableInputFields = () => {
   // Enable input fields and button
@@ -113,20 +119,19 @@ const generateSquare = () => {
           enableInputFields();
         } else {
           while (true) {
+            const randomSquareIdx = getRandomTableCellIndex(boardSize);
             const randomSquare =
-              table.getElementsByTagName("td")[
-                getRandomTableCellIndex(boardSize)
-              ];
+              table.getElementsByTagName("td")[randomSquareIdx];
             const randomColour = generateRandomColour();
 
             if (
-              prevRandomSquareIdx === randomSquare &&
+              prevRandomSquareIdx === randomSquareIdx &&
               prevRandomSquareColour === randomColour
             ) {
               continue;
               // Only generate a random square if current colour and index is not the same as last iteration
             } else {
-              prevRandomSquareIdx = randomSquare;
+              prevRandomSquareIdx = randomSquareIdx;
               prevRandomSquareColour = randomColour;
               createRandomColouredSquare(randomSquare);
               setTimeout(removeRandomColouredSquare, delayTime, randomSquare);
@@ -174,9 +179,9 @@ const endGameResetStyles = () => {
   // Display home page
   homePageWrapper.style.display = "block";
   // Reset level
-  levelVal = 1;
+  levelVal = LEVEL_VAL;
   // Reset number of lives remaining
-  numOfLivesRemaining = 3;
+  numOfLivesRemaining = NUM_OF_LIVES_REMAINING;
   // Reset text colour
   if (correctIncorrectText.classList.contains("incorrect-answer")) {
     setClassName(correctIncorrectText, "incorrect-answer", false);
@@ -212,6 +217,9 @@ const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
       () => (levelText.textContent = levelTextTextContent),
     );
   }
+  // Hide correct answer text
+  setClassName(displayCorrectAnswerPara, "hidden");
+  displayCorrectAnswerPara.textContent = "";
   // Reset input fields and set to disabled
   redInput.value = "0";
   blueInput.value = "0";
@@ -250,7 +258,7 @@ nextLvlOrEndGameBtn.addEventListener("click", () => {
   if (nextLvlOrEndGameBtn.textContent === endGameText) {
     resetStyles();
     // Reset number of squares
-    numOfSquares = 3;
+    numOfSquares = NUM_OF_SQUARES;
   } else if (nextLvlOrEndGameBtn.textContent === nextLevelText) {
     resetStyles(`Level ${++levelVal}`, true);
     // Increase number of squares by 1
@@ -279,6 +287,7 @@ answerForm.addEventListener("submit", (e) => {
   } else {
     // Wrong answer
     --numOfLivesRemaining;
+    const correctAnswerText = `Correct answer was: Red ${answerObj.red}, Blue: ${answerObj.blue}, Green: ${answerObj.green}`;
     if (numOfLivesRemaining > 0) {
       // Reset input fields and set to disabled
       redInput.setAttribute("disabled", true);
@@ -318,6 +327,9 @@ answerForm.addEventListener("submit", (e) => {
           (numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`),
       );
     }
+    // Display correct answer
+    setClassName(displayCorrectAnswerPara, "hidden", false);
+    displayCorrectAnswerPara.textContent = correctAnswerText;
   }
   // Disable submit button to prevent another form submission
   submitBtn.setAttribute("disabled", true);
