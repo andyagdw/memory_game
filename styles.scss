@@ -113,7 +113,11 @@ p {
           red
         )
         border-box;
-    animation: 30s color-rotation infinite;
+    @media (prefers-reduced-motion: no-preference) {
+      animation-name: color-rotation, bounce;
+      animation-duration: 30s, 1100ms;
+      animation-iteration-count: infinite;
+    }
     box-shadow: 5px 5px 10px variables.$black;
     border-radius: 0.5rem;
   }
@@ -161,9 +165,6 @@ p {
   &__heading {
     font-size: clamp(2.2rem, 8vw, 3rem);
     text-align: center;
-    @media (prefers-reduced-motion: no-preference) {
-      animation: bounce 1100ms ease infinite;
-    }
   }
 
   &__span {

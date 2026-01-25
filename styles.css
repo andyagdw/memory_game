@@ -114,7 +114,15 @@ p {
   font-size: 1.6rem;
   border: 4px solid transparent;
   background: linear-gradient(hsl(60, 24%, 96%), hsl(60, 24%, 96%)) padding-box, conic-gradient(from var(--rotation), red, green, yellow, blue, purple, red) border-box;
-  animation: 30s color-rotation infinite;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .button--play-game {
+    animation-name: color-rotation, bounce;
+    animation-duration: 30s, 1100ms;
+    animation-iteration-count: infinite;
+  }
+}
+.button--play-game {
   box-shadow: 5px 5px 10px hsl(0, 0%, 0%);
   border-radius: 0.5rem;
 }
@@ -156,11 +164,6 @@ p {
 .play-game-btn-wrapper__heading {
   font-size: clamp(2.2rem, 8vw, 3rem);
   text-align: center;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .play-game-btn-wrapper__heading {
-    animation: bounce 1100ms ease infinite;
-  }
 }
 .play-game-btn-wrapper__span {
   color: hsl(24, 74%, 49%);
