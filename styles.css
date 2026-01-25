@@ -202,12 +202,7 @@ p {
     width: fit-content;
   }
 }
-
-.dialog__close-btn-wrapper {
-  display: flex;
-  justify-content: end;
-}
-.dialog__close-btn-wrapper button {
+.dialog__button {
   border-radius: 100vw;
   border: none;
   position: absolute;
@@ -215,7 +210,7 @@ p {
   inset-inline-end: 1em;
   background-color: rgb(from hsl(0, 0%, 0%) r g calc(b + 40));
 }
-.dialog__close-btn-wrapper button::before {
+.dialog__button::before {
   content: " ×";
   font-size: 1.5rem;
   color: hsl(60, 24%, 96%);
@@ -299,6 +294,40 @@ table td {
   inline-size: 5em;
   block-size: 3em;
   background-color: hsl(195, 53%, 79%);
+}
+
+.popover {
+  position: relative;
+  margin: auto;
+  text-align: center;
+  padding: 3em;
+  background-color: rgb(from hsl(0, 0%, 0%) r g calc(b + 10));
+  color: hsl(60, 24%, 96%);
+  border-radius: 1rem;
+  inline-size: min(90%, 400px);
+}
+.popover button {
+  border-radius: 100vw;
+  border: none;
+  position: absolute;
+  inset-block-start: 1em;
+  inset-inline-end: 1em;
+  background-color: rgb(from hsl(0, 0%, 0%) r g calc(b + 40));
+}
+.popover button::before {
+  content: " ×";
+  font-size: 1.5rem;
+  color: hsl(60, 24%, 96%);
+}
+.popover__heading {
+  margin-block-start: 1.5em;
+  margin-block-end: 1em;
+}
+.popover__new-level-text {
+  background: conic-gradient(red, green, yellow, blue, purple, red);
+  background-clip: text;
+  color: transparent;
+  font-size: 1.5rem;
 }
 
 @keyframes color-rotation {

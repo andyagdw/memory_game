@@ -27,3 +27,24 @@
     );
   }
 }
+
+@mixin button-styling(
+  $color,
+  $bg-color,
+  $inset-block-start: 1em,
+  $inset-block-end: 1em,
+  $font-size: 1.5rem
+) {
+  border-radius: 100vw;
+  border: none;
+  position: absolute;
+  inset-block-start: $inset-block-start;
+  inset-inline-end: $inset-block-end;
+  background-color: rgb(from $bg-color r g calc(b + 40));
+
+  &::before {
+    content: " \00D7";
+    font-size: $font-size;
+    color: $color;
+  }
+}

@@ -82,17 +82,14 @@
   </head>
   <body class="home-page-body bitcount-single-google-font">
     <div class="wrapper home-page-body__wrapper">
-      <!-- <header class="header">
-        <h1 class="header__heading">Memory Game</h1>
-      </header> -->
       <main>
         <div class="home-page-wrapper js-home-page-wrapper">
           <div class="play-game-btn-wrapper">
-            <div>
+            <header>
               <h1 class="play-game-btn-wrapper__heading">
                 Memory <span class="play-game-btn-wrapper__span">Burst</span>
               </h1>
-            </div>
+            </header>
             <div>
               <button class="button button--play-game js-button--play-game">
                 Start Game
@@ -116,13 +113,12 @@
           </div>
           <!-- HOW TO PLAY GUIDE -->
           <dialog id="how-to-play-guide" class="dialog">
-            <div class="dialog__close-btn-wrapper">
-              <button
-                class="button"
-                commandfor="how-to-play-guide"
-                command="close"
-              ></button>
-            </div>
+            <button
+              class="button dialog__button"
+              commandfor="how-to-play-guide"
+              command="close"
+              aria-label="Close how to play guide"
+            ></button>
             <hgroup>
               <h2 class="dialog__heading">Memory Game Guide</h2>
               <p>How good is your memory?</p>
@@ -161,7 +157,6 @@
         </div>
         <!-- GAME BOARD -->
         <div class="game-wrapper js-game-wrapper hidden">
-          <!-- !UPDATE TEXT -->
           <h2 class="game-wrapper__heading js-game-wrapper__heading"></h2>
           <h3
             class="game-wrapper__num-of-lives-heading js-game-wrapper__num-of-lives-heading"
@@ -247,20 +242,31 @@
                 <button
                   type="button"
                   class="button button--next-lvl-or-end-game js-button--next-lvl-or-end-game hidden"
-                >
-                  <!-- !UPDATE TEXT -->
-                </button>
+                ></button>
               </div>
             </form>
           </div>
           <!-- End ANSWER FORM -->
           <div class="hidden js-correct-incorrect-text-wrapper">
-            <!-- ! UPDATE TEXT -->
             <p class="correct-incorrect-text js-correct-incorrect-text"></p>
             <p
               class="hidden correct-incorrect-text-wrapper__display-correct-answer js-correct-incorrect-text-wrapper__display-correct-answer"
             ></p>
           </div>
+          <!-- BEST SCORE POPOVER -->
+          <div popover="auto" class="js-popover popover" id="popover">
+            <button
+              aria-label="Close popover"
+              class="button"
+              command="hide-popover"
+              commandfor="popover"
+            ></button>
+            <h4 class="popover__heading">New High Score!</h4>
+            <span
+              class="popover__new-level-text js-popover__new-level-text"
+            ></span>
+          </div>
+          <!-- End BEST SCORE POPOVER -->
         </div>
         <!-- End GAME BOARD -->
       </main>

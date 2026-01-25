@@ -11,7 +11,7 @@ const answerObj = {
 
 const LEVEL_VAL = 1;
 const NUM_OF_SQUARES = 3;
-const NUM_OF_LIVES_REMAINING = 12;
+const NUM_OF_LIVES_REMAINING = 2;
 const LOCAL_STORAGE_KEY = "memory_burst_high_score";
 let levelVal = LEVEL_VAL; // The level the user is currently on
 let numOfSquares = NUM_OF_SQUARES; // The default number of squares to generate for level 1
@@ -61,6 +61,8 @@ const displayCorrectAnswerPara = document.querySelector(
 const userHighScoreText = document.querySelector(
   ".js-high-score-wrapper__score",
 );
+const highScorePopover = document.querySelector(".js-popover");
+const highScoreText = document.querySelector(".js-popover__new-level-text");
 // ===================================================
 const enableInputFields = () => {
   // Enable input fields and button
@@ -190,6 +192,10 @@ const endGameResetStyles = () => {
   if (nextLvlOrEndGameBtn.classList.contains("end-game-style")) {
     setClassName(nextLvlOrEndGameBtn, "end-game-style", false);
   }
+  // Hide high score popover if user has not closed it
+  if (highScorePopover.style.display === "block") {
+    highScorePopover.style.display = "none";
+  }
 };
 
 const updateUserScore = () => {
@@ -197,6 +203,8 @@ const updateUserScore = () => {
   if (levelVal > userHighScore) {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(levelVal));
     userHighScoreText.textContent = levelVal;
+    highScorePopover.showPopover();
+    highScoreText.textContent = `Level ${levelVal}`;
   }
 };
 

@@ -176,7 +176,6 @@ p {
   padding-inline: min(10%, 2.5em);
   padding-block: 2.5em;
   inline-size: min(90%, 600px);
-  // position: relative;
   background-color: rgb(from variables.$black r g calc(b + 10));
   color: variables.$white;
   display: none;
@@ -204,25 +203,9 @@ p {
       width: fit-content;
     }
   }
-}
 
-.dialog__close-btn-wrapper {
-  display: flex;
-  justify-content: end;
-
-  button {
-    border-radius: 100vw;
-    border: none;
-    position: absolute;
-    inset-block-start: 1em;
-    inset-inline-end: 1em;
-    background-color: rgb(from variables.$black r g calc(b + 40));
-
-    &::before {
-      content: " \00D7";
-      font-size: 1.5rem;
-      color: variables.$white;
-    }
+  &__button {
+    @include mixins.button-styling(variables.$white, variables.$black);
   }
 }
 
@@ -310,6 +293,35 @@ table {
     background-color: variables.$table-color;
   }
 }
+
+// HIGH SCORE POPOVER
+.popover {
+  position: relative;
+  margin: auto;
+  text-align: center;
+  padding: 3em;
+  background-color: rgb(from variables.$black r g calc(b + 10));
+  color: variables.$white;
+  border-radius: 1rem;
+  inline-size: min(90%, 400px);
+
+  button {
+    @include mixins.button-styling(variables.$white, variables.$black);
+  }
+
+  &__heading {
+    margin-block-start: 1.5em;
+    margin-block-end: 1em;
+  }
+
+  &__new-level-text {
+    background: conic-gradient(red, green, yellow, blue, purple, red);
+    background-clip: text;
+    color: transparent;
+    font-size: 1.5rem;
+  }
+}
+// END HIGH SCORE POPOVER
 // END GAME BOARD
 
 @keyframes color-rotation {
