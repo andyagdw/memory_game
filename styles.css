@@ -171,9 +171,23 @@ p {
   padding-inline: min(10%, 2.5em);
   padding-block: 2.5em;
   inline-size: min(90%, 600px);
-  position: relative;
   background-color: rgb(from hsl(0, 0%, 0%) r g calc(b + 10));
   color: hsl(60, 24%, 96%);
+  display: none;
+  opacity: 0;
+  translate: 0 25vh;
+  transition: all 1s allow-discrete;
+}
+.dialog[open] {
+  opacity: 1;
+  display: block;
+  translate: 0 0;
+}
+@starting-style {
+  .dialog[open] {
+    opacity: 0;
+    translate: 0 25vh;
+  }
 }
 .dialog__heading {
   margin-block-end: 0.5em;

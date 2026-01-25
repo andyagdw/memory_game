@@ -176,9 +176,24 @@ p {
   padding-inline: min(10%, 2.5em);
   padding-block: 2.5em;
   inline-size: min(90%, 600px);
-  position: relative;
+  // position: relative;
   background-color: rgb(from variables.$black r g calc(b + 10));
   color: variables.$white;
+  display: none;
+  opacity: 0;
+  translate: 0 25vh;
+  transition: all 1s allow-discrete;
+
+  &[open] {
+    opacity: 1;
+    display: block;
+    translate: 0 0;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 25vh;
+    }
+  }
 
   &__heading {
     margin-block-end: 0.5em;
