@@ -295,7 +295,11 @@ const showLivesRemainingDisplay = () => {
   updateCorrectIncorrectText();
 };
 
-const showCorrectLivesDisplay = () => {
+const showCorrectAnswerDisplay = () => {
+  // Check to see if 'correct answer' UI is displaying from a previous guess
+  if (!displayCorrectAnswerPara.classList.contains("hidden")) {
+    setClassName(displayCorrectAnswerPara, "hidden");
+  }
   setClassName(correctIncorrectTextWrapper, "hidden", false);
   correctIncorrectText.textContent = "Congratulations!";
   setClassName(correctIncorrectText, "correct-answer");
@@ -330,7 +334,7 @@ answerForm.addEventListener("submit", (e) => {
     +blueInput.value === answerObj.blue &&
     +greenInput.value === answerObj.green
   ) {
-    showCorrectLivesDisplay();
+    showCorrectAnswerDisplay();
   } else {
     // Wrong answer
     --numOfLivesRemaining;
