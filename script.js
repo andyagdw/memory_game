@@ -243,6 +243,48 @@ const updateCorrectIncorrectText = () => {
   }
 };
 
+const showNoLivesRemainingDisplay = () => {
+  // Reset input fields and set to disabled
+  setClassName(correctIncorrectTextWrapper, "hidden", false);
+  correctIncorrectText.textContent = "Game over!";
+  setClassName(correctIncorrectText, "incorrect-answer");
+  setClassName(nextLvlOrEndGameBtn, "hidden", false);
+  nextLvlOrEndGameBtn.textContent = endGameText;
+  // Update end game button classname
+  setClassName(nextLvlOrEndGameBtn, "end-game-style");
+};
+
+const showLivesRemainingDisplay = () => {
+  redInput.setAttribute("disabled", true);
+  blueInput.setAttribute("disabled", true);
+  greenInput.setAttribute("disabled", true);
+  redInput.value = "0";
+  blueInput.value = "0";
+  greenInput.value = "0";
+  // Reset answerObj to 0
+  answerObj.red = 0;
+  answerObj.blue = 0;
+  answerObj.green = 0;
+  // Show incorrect text at the bottom
+  setClassName(correctIncorrectTextWrapper, "hidden", false);
+  // Remove correct colour text, if present
+  if (correctIncorrectText.classList.contains("correct-answer")) {
+    setClassName(correctIncorrectText, "correct-answer", false);
+  }
+  correctIncorrectText.textContent = "Incorrect!";
+  updateCorrectIncorrectText();
+};
+
+const showCorrectLivesDisplay = () => {
+  setClassName(correctIncorrectTextWrapper, "hidden", false);
+  correctIncorrectText.textContent = "Congratulations!";
+  setClassName(correctIncorrectText, "correct-answer");
+  setClassName(nextLvlOrEndGameBtn, "hidden", false);
+  nextLvlOrEndGameBtn.textContent = nextLevelText;
+  // Update next level button classname
+  setClassName(nextLvlOrEndGameBtn, "next-level-style");
+};
+
 // ===================================================
 startGameBtn.addEventListener("click", startGame);
 nextLvlOrEndGameBtn.addEventListener("click", () => {
@@ -268,46 +310,16 @@ answerForm.addEventListener("submit", (e) => {
     +blueInput.value === answerObj.blue &&
     +greenInput.value === answerObj.green
   ) {
-    setClassName(correctIncorrectTextWrapper, "hidden", false);
-    correctIncorrectText.textContent = "Congratulations!";
-    setClassName(correctIncorrectText, "correct-answer");
-    setClassName(nextLvlOrEndGameBtn, "hidden", false);
-    nextLvlOrEndGameBtn.textContent = nextLevelText;
-    // Update next level button classname
-    setClassName(nextLvlOrEndGameBtn, "next-level-style");
+    showCorrectLivesDisplay();
   } else {
     // Wrong answer
     --numOfLivesRemaining;
     const correctAnswerText = `Correct answer was: Red ${answerObj.red}, Blue: ${answerObj.blue}, Green: ${answerObj.green}`;
     if (numOfLivesRemaining > 0) {
-      // Reset input fields and set to disabled
-      redInput.setAttribute("disabled", true);
-      blueInput.setAttribute("disabled", true);
-      greenInput.setAttribute("disabled", true);
-      redInput.value = "0";
-      blueInput.value = "0";
-      greenInput.value = "0";
-      // Reset answerObj to 0
-      answerObj.red = 0;
-      answerObj.blue = 0;
-      answerObj.green = 0;
-      // Show incorrect text at the bottom
-      setClassName(correctIncorrectTextWrapper, "hidden", false);
-      // Remove correct colour text, if present
-      if (correctIncorrectText.classList.contains("correct-answer")) {
-        setClassName(correctIncorrectText, "correct-answer", false);
-      }
-      correctIncorrectText.textContent = "Incorrect!";
-      updateCorrectIncorrectText();
+      showLivesRemainingDisplay();
     } else {
       // No lives remaining
-      setClassName(correctIncorrectTextWrapper, "hidden", false);
-      correctIncorrectText.textContent = "Game over!";
-      setClassName(correctIncorrectText, "incorrect-answer");
-      setClassName(nextLvlOrEndGameBtn, "hidden", false);
-      nextLvlOrEndGameBtn.textContent = endGameText;
-      // Update end game button classname
-      setClassName(nextLvlOrEndGameBtn, "end-game-style");
+      showNoLivesRemainingDisplay();
     }
     // Update number of lives remaining text
     if (!document.startViewTransition) {
