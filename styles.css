@@ -55,9 +55,9 @@ body {
 }
 
 body.home-page-body {
-  background-image: url("./assets/landing_page.png");
+  background-image: url("./assets/landing_page_2.png");
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: 50% 30%;
   background-size: cover;
   position: relative;
 }
@@ -72,7 +72,7 @@ body.home-page-body::before {
 body.game-page-body {
   background-image: url("./assets/game_page.png");
   background-repeat: no-repeat;
-  background-position: top;
+  background-position: 50% 30%;
   background-size: cover;
   position: relative;
 }
