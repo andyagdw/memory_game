@@ -210,6 +210,14 @@ p {
     }
   }
 }
+
+.high-score-wrapper {
+  text-align: center;
+  padding: 1.5em;
+  backdrop-filter: blur(10px);
+  border-radius: 5rem;
+}
+
 // END HOME PAGE
 
 // GAME BOARD

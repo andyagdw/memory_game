@@ -9,7 +9,7 @@ You need to **correctly enter in how many red, blue, and green squares appeared 
 
 Each level has **three input fields** for entering the number of squares that appeared for each colour.
 
-**You have three lives**. This means that when you get an answer wrong, you can try again. However, though the number of squares that appear on the board will be the same, the pattern will be different!
+**You have 12 lives**. This means that when you get an answer wrong, you can try again. However, though the number of squares that appear on the board will be the same, the pattern will be different!
 
 For each incorrect answer, you lose one life. When you reach zero lives, the game ends.
 

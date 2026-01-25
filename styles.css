@@ -207,6 +207,13 @@ p {
   color: hsl(60, 24%, 96%);
 }
 
+.high-score-wrapper {
+  text-align: center;
+  padding: 1.5em;
+  backdrop-filter: blur(10px);
+  border-radius: 5rem;
+}
+
 .game-wrapper {
   display: flex;
   align-items: center;

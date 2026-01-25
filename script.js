@@ -12,6 +12,7 @@ const answerObj = {
 const LEVEL_VAL = 1;
 const NUM_OF_SQUARES = 3;
 const NUM_OF_LIVES_REMAINING = 12;
+const LOCAL_STORAGE_KEY = "memory_burst_high_score";
 let levelVal = LEVEL_VAL; // The level the user is currently on
 let numOfSquares = NUM_OF_SQUARES; // The default number of squares to generate for level 1
 let numOfLivesRemaining = NUM_OF_LIVES_REMAINING;
@@ -56,6 +57,9 @@ const numOfLivesHeading = document.querySelector(
 const body = document.querySelector("body");
 const displayCorrectAnswerPara = document.querySelector(
   ".js-correct-incorrect-text-wrapper__display-correct-answer",
+);
+const userHighScoreText = document.querySelector(
+  ".js-high-score-wrapper__score",
 );
 // ===================================================
 const enableInputFields = () => {
@@ -185,6 +189,14 @@ const endGameResetStyles = () => {
   // Remove end game button style
   if (nextLvlOrEndGameBtn.classList.contains("end-game-style")) {
     setClassName(nextLvlOrEndGameBtn, "end-game-style", false);
+  }
+};
+
+const updateUserScore = () => {
+  const userHighScore = +JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+  if (levelVal > userHighScore) {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(levelVal));
+    userHighScoreText.textContent = levelVal;
   }
 };
 
@@ -319,6 +331,7 @@ answerForm.addEventListener("submit", (e) => {
       showLivesRemainingDisplay();
     } else {
       // No lives remaining
+      updateUserScore();
       showNoLivesRemainingDisplay();
     }
     // Update number of lives remaining text
@@ -336,4 +349,18 @@ answerForm.addEventListener("submit", (e) => {
   }
   // Disable submit button to prevent another form submission
   submitBtn.setAttribute("disabled", true);
+});
+
+// Show high score
+document.addEventListener("DOMContentLoaded", () => {
+  let userHighScore = JSON.parse(
+    localStorage.getItem("memory_burst_high_score") ?? null,
+  );
+
+  if (!userHighScore) {
+    userHighScore = 0;
+    localStorage.setItem("memory_burst_high_score", "0");
+  }
+
+  userHighScoreText.textContent = userHighScore;
 });
