@@ -84,18 +84,9 @@ const removeRandomColouredSquare = (randomSquare) => {
   }
 };
 
-const createRandomColouredSquare = (randomSquare) => {
-  const randomNum = Math.random();
-  if (randomNum < 0.3) {
-    setClassName(randomSquare, "red");
-    answerObj.red += 1;
-  } else if (randomNum >= 0.3 && randomNum <= 0.6) {
-    setClassName(randomSquare, "blue");
-    answerObj.blue += 1;
-  } else {
-    setClassName(randomSquare, "green");
-    answerObj.green += 1;
-  }
+const createRandomColouredSquare = (randomSquare, randomColour) => {
+  setClassName(randomSquare, randomColour);
+  answerObj[randomColour] += 1;
 };
 
 const generateRandomColour = () => {
@@ -133,7 +124,7 @@ const generateSquare = () => {
             } else {
               prevRandomSquareIdx = randomSquareIdx;
               prevRandomSquareColour = randomColour;
-              createRandomColouredSquare(randomSquare);
+              createRandomColouredSquare(randomSquare, randomColour);
               setTimeout(removeRandomColouredSquare, delayTime, randomSquare);
               break;
             }
