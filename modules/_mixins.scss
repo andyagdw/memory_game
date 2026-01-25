@@ -12,7 +12,7 @@
 @mixin body-bg-styling($url) {
   background-image: url($url);
   background-repeat: no-repeat;
-  background-position: 50% 30%;
+  background-position: top;
   background-size: cover;
   position: relative;
   &::before {
