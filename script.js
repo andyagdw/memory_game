@@ -80,14 +80,8 @@ const setClassName = (element, className, addClassName = true) => {
     : element.classList.remove(className);
 };
 
-const removeRandomColouredSquare = (randomSquare) => {
-  if (randomSquare.classList.contains("red")) {
-    setClassName(randomSquare, "red", false);
-  } else if (randomSquare.classList.contains("blue")) {
-    setClassName(randomSquare, "blue", false);
-  } else {
-    setClassName(randomSquare, "green", false);
-  }
+const removeRandomColouredSquare = (randomSquare, randomColour) => {
+  setClassName(randomSquare, randomColour, false);
 };
 
 const createRandomColouredSquare = (randomSquare, randomColour) => {
@@ -131,7 +125,12 @@ const generateSquare = () => {
               prevRandomSquareIdx = randomSquareIdx;
               prevRandomSquareColour = randomColour;
               createRandomColouredSquare(randomSquare, randomColour);
-              setTimeout(removeRandomColouredSquare, delayTime, randomSquare);
+              setTimeout(
+                removeRandomColouredSquare,
+                delayTime,
+                randomSquare,
+                randomColour,
+              );
               break;
             }
           }
@@ -363,7 +362,7 @@ answerForm.addEventListener("submit", (e) => {
   submitBtn.setAttribute("disabled", true);
 });
 
-// Show high score
+// Show high score when HTML has been parsed
 document.addEventListener("DOMContentLoaded", () => {
   let userHighScore = JSON.parse(
     localStorage.getItem("memory_burst_high_score") ?? null,
