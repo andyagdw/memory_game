@@ -197,7 +197,7 @@ const endGameResetStyles = () => {
   }
 };
 
-const updateUserScore = () => {
+const updateUserHighScore = () => {
   const userHighScore = +JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
   if (levelVal > userHighScore) {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(levelVal));
@@ -342,7 +342,7 @@ answerForm.addEventListener("submit", (e) => {
       showLivesRemainingDisplay();
     } else {
       // No lives remaining
-      updateUserScore();
+      updateUserHighScore();
       showNoLivesRemainingDisplay();
     }
     // Update number of lives remaining text
@@ -365,12 +365,12 @@ answerForm.addEventListener("submit", (e) => {
 // Show high score when HTML has been parsed
 document.addEventListener("DOMContentLoaded", () => {
   let userHighScore = JSON.parse(
-    localStorage.getItem("memory_burst_high_score") ?? null,
+    localStorage.getItem(LOCAL_STORAGE_KEY) ?? null,
   );
 
   if (!userHighScore) {
     userHighScore = 0;
-    localStorage.setItem("memory_burst_high_score", "0");
+    localStorage.setItem(LOCAL_STORAGE_KEY, "0");
   }
 
   userHighScoreText.textContent = userHighScore;
