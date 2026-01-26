@@ -12,7 +12,7 @@ board.
 Each level includes **three input fields** for
 entering the number of squares that appeared for each color.
 
-You start the game with **12 lives.** For each
+You start the game with **10 lives.** For each
 incorrect answer, you lose one life. When you reach zero lives,
 the game ends.
 

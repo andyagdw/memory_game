@@ -11,7 +11,7 @@ const answerObj = {
 
 const LEVEL_VAL = 1;
 const NUM_OF_SQUARES = 3;
-const NUM_OF_LIVES_REMAINING = 12;
+const NUM_OF_LIVES_REMAINING = 10;
 const LOCAL_STORAGE_KEY = "memory_burst_high_score";
 let levelVal = LEVEL_VAL; // The level the user is currently on
 let numOfSquares = NUM_OF_SQUARES; // The default number of squares to generate for level 1
@@ -154,7 +154,7 @@ const startGame = () => {
   // Display game page
   gameWrapper.style.display = "flex";
   // Update level text
-  levelText.innerText = `Level ${levelVal}`;
+  levelText.textContent = `Level ${levelVal}`;
   // Update 'number of lives remaining text'
   numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
   // Update body background
