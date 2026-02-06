@@ -64,11 +64,11 @@ body {
 }
 
 body.home-page-body {
-  @include mixins.body-bg-styling("./assets/landing_page_2.png");
+  @include mixins.body-bg-styling("../assets/landing_page_2.png");
 }
 
 body.game-page-body {
-  @include mixins.body-bg-styling("./assets/game_page.png");
+  @include mixins.body-bg-styling("../assets/game_page.png");
 }
 
 .wrapper {

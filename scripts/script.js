@@ -1,31 +1,29 @@
-const getRandomTableCellIndex = (sizeOfBoard) => {
-  return Math.floor(Math.random() * (sizeOfBoard * sizeOfBoard));
-};
+import {
+  LEVEL_VAL,
+  STARTING_NUM_OF_GENERATED_SQUARES,
+  NUM_OF_LIVES_REMAINING,
+  LOCAL_STORAGE_KEY,
+  BOARD_SIZE,
+  END_GAME_TEXT,
+  NEXT_LEVEL_TEXT,
+  NUM_OF_LIVES_REMAINING_TEXT,
+  DELAY_BEFORE_RESTARTING_A_LEVEL,
+  DELAY_TIME,
+  ANSWER_OBJ,
+} from "./modules/constants.js";
+
+import {
+  getRandomTableCellIndex,
+  setClassName,
+  generateRandomColour,
+  removeRandomColouredSquare,
+  createRandomColouredSquare,
+} from "./modules/utils.js";
 
 // ===================================================
-const answerObj = {
-  red: 0,
-  blue: 0,
-  green: 0,
-};
-
-const LEVEL_VAL = 1;
-const NUM_OF_SQUARES = 3;
-const NUM_OF_LIVES_REMAINING = 10;
-const LOCAL_STORAGE_KEY = "memory_burst_high_score";
 let levelVal = LEVEL_VAL; // The level the user is currently on
-let numOfSquares = NUM_OF_SQUARES; // The default number of squares to generate for level 1
+let numOfSquares = STARTING_NUM_OF_GENERATED_SQUARES; // The default number of squares to generate for level 1
 let numOfLivesRemaining = NUM_OF_LIVES_REMAINING;
-const boardSize = 4;
-const endGameText = "End Game";
-const nextLevelText = "Next";
-const numOfLivesRemainingText = "Number of lives remaining:";
-const delayBeforeRestartingALevel = 10;
-/* 
-  How long it takes for a random coloured square to appear on the board
-  How long it takes before a random coloured square to disappears of the board
-*/
-const delayTime = 1000;
 
 // ===================================================
 // Can add `@type` to all elements
@@ -71,33 +69,7 @@ const enableInputFields = () => {
   greenInput.removeAttribute("disabled");
   submitBtn.removeAttribute("disabled");
   // ! UNCOMMENT TO DISPLAY OBJECT IN CONSOLE
-  // console.log("Answer object", answerObj);
-};
-
-const setClassName = (element, className, addClassName = true) => {
-  addClassName
-    ? element.classList.add(className)
-    : element.classList.remove(className);
-};
-
-const removeRandomColouredSquare = (randomSquare, randomColour) => {
-  setClassName(randomSquare, randomColour, false);
-};
-
-const createRandomColouredSquare = (randomSquare, randomColour) => {
-  setClassName(randomSquare, randomColour);
-  answerObj[randomColour] += 1;
-};
-
-const generateRandomColour = () => {
-  const randomNum = Math.random();
-  if (randomNum < 0.3) {
-    return "red";
-  } else if (randomNum >= 0.3 && randomNum <= 0.6) {
-    return "blue";
-  } else {
-    return "green";
-  }
+  // console.log("Answer object", ANSWER_OBJ);
 };
 
 const generateSquare = () => {
@@ -110,7 +82,7 @@ const generateSquare = () => {
           enableInputFields();
         } else {
           while (true) {
-            const randomSquareIdx = getRandomTableCellIndex(boardSize);
+            const randomSquareIdx = getRandomTableCellIndex(BOARD_SIZE);
             const randomSquare =
               table.getElementsByTagName("td")[randomSquareIdx];
             const randomColour = generateRandomColour();
@@ -124,19 +96,25 @@ const generateSquare = () => {
             } else {
               prevRandomSquareIdx = randomSquareIdx;
               prevRandomSquareColour = randomColour;
-              createRandomColouredSquare(randomSquare, randomColour);
-              setTimeout(
-                removeRandomColouredSquare,
-                delayTime,
+              createRandomColouredSquare(
                 randomSquare,
                 randomColour,
+                setClassName,
+                ANSWER_OBJ,
+              );
+              setTimeout(
+                removeRandomColouredSquare,
+                DELAY_TIME,
+                randomSquare,
+                randomColour,
+                setClassName,
               );
               break;
             }
           }
         }
       },
-      (i + 1) * delayTime,
+      (i + 1) * DELAY_TIME,
     );
   }
 };
@@ -156,7 +134,7 @@ const startGame = () => {
   // Update level text
   levelText.textContent = `Level ${levelVal}`;
   // Update 'number of lives remaining text'
-  numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
+  numOfLivesHeading.textContent = `${NUM_OF_LIVES_REMAINING_TEXT} ${numOfLivesRemaining}`;
   // Update body background
   if (!document.startViewTransition) {
     updateBodyBackground();
@@ -209,9 +187,9 @@ const updateUserHighScore = () => {
 
 const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
   // Reset Object
-  answerObj.red = 0;
-  answerObj.green = 0;
-  answerObj.blue = 0;
+  ANSWER_OBJ.red = 0;
+  ANSWER_OBJ.green = 0;
+  ANSWER_OBJ.blue = 0;
   if (!endOfGame) {
     endGameResetStyles();
   }
@@ -244,7 +222,7 @@ const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
 };
 
 const updateCorrectIncorrectText = () => {
-  for (let i = delayBeforeRestartingALevel; i >= 0; i--) {
+  for (let i = DELAY_BEFORE_RESTARTING_A_LEVEL; i >= 0; i--) {
     setTimeout(
       () => {
         if (i === 0) {
@@ -257,7 +235,7 @@ const updateCorrectIncorrectText = () => {
           correctIncorrectText.textContent = `Incorrect! Restarting level in ${i} seconds...`;
         }
       },
-      (delayBeforeRestartingALevel + 1 - i) * 1000, // Count up from 0 onwards
+      (DELAY_BEFORE_RESTARTING_A_LEVEL + 1 - i) * 1000, // Count up from 0 onwards
     );
   }
 };
@@ -268,7 +246,7 @@ const showNoLivesRemainingDisplay = () => {
   correctIncorrectText.textContent = "Game over!";
   setClassName(correctIncorrectText, "incorrect-answer");
   setClassName(nextLvlOrEndGameBtn, "hidden", false);
-  nextLvlOrEndGameBtn.textContent = endGameText;
+  nextLvlOrEndGameBtn.textContent = END_GAME_TEXT;
   // Update end game button classname
   setClassName(nextLvlOrEndGameBtn, "end-game-style");
 };
@@ -280,10 +258,10 @@ const showLivesRemainingDisplay = () => {
   redInput.value = "0";
   blueInput.value = "0";
   greenInput.value = "0";
-  // Reset answerObj to 0
-  answerObj.red = 0;
-  answerObj.blue = 0;
-  answerObj.green = 0;
+  // Reset ANSWER_OBJ to 0
+  ANSWER_OBJ.red = 0;
+  ANSWER_OBJ.blue = 0;
+  ANSWER_OBJ.green = 0;
   // Show incorrect text at the bottom
   setClassName(correctIncorrectTextWrapper, "hidden", false);
   // Remove correct colour text, if present
@@ -303,7 +281,7 @@ const showCorrectAnswerDisplay = () => {
   correctIncorrectText.textContent = "Congratulations!";
   setClassName(correctIncorrectText, "correct-answer");
   setClassName(nextLvlOrEndGameBtn, "hidden", false);
-  nextLvlOrEndGameBtn.textContent = nextLevelText;
+  nextLvlOrEndGameBtn.textContent = NEXT_LEVEL_TEXT;
   // Update next level button classname
   setClassName(nextLvlOrEndGameBtn, "next-level-style");
 };
@@ -311,11 +289,11 @@ const showCorrectAnswerDisplay = () => {
 // ===================================================
 startGameBtn.addEventListener("click", startGame);
 nextLvlOrEndGameBtn.addEventListener("click", () => {
-  if (nextLvlOrEndGameBtn.textContent === endGameText) {
+  if (nextLvlOrEndGameBtn.textContent === END_GAME_TEXT) {
     resetStyles();
     // Reset number of squares
-    numOfSquares = NUM_OF_SQUARES;
-  } else if (nextLvlOrEndGameBtn.textContent === nextLevelText) {
+    numOfSquares = STARTING_NUM_OF_GENERATED_SQUARES;
+  } else if (nextLvlOrEndGameBtn.textContent === NEXT_LEVEL_TEXT) {
     resetStyles(`Level ${++levelVal}`, true);
     // Increase number of squares by 1
     ++numOfSquares;
@@ -329,15 +307,15 @@ answerForm.addEventListener("submit", (e) => {
   e.preventDefault();
   // Correct answer
   if (
-    +redInput.value === answerObj.red &&
-    +blueInput.value === answerObj.blue &&
-    +greenInput.value === answerObj.green
+    +redInput.value === ANSWER_OBJ.red &&
+    +blueInput.value === ANSWER_OBJ.blue &&
+    +greenInput.value === ANSWER_OBJ.green
   ) {
     showCorrectAnswerDisplay();
   } else {
     // Wrong answer
     --numOfLivesRemaining;
-    const correctAnswerText = `Correct answer was: Red ${answerObj.red}, Blue: ${answerObj.blue}, Green: ${answerObj.green}`;
+    const correctAnswerText = `Correct answer was: Red ${ANSWER_OBJ.red}, Blue: ${ANSWER_OBJ.blue}, Green: ${ANSWER_OBJ.green}`;
     if (numOfLivesRemaining > 0) {
       showLivesRemainingDisplay();
     } else {
@@ -347,11 +325,11 @@ answerForm.addEventListener("submit", (e) => {
     }
     // Update number of lives remaining text
     if (!document.startViewTransition) {
-      numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`;
+      numOfLivesHeading.textContent = `${NUM_OF_LIVES_REMAINING_TEXT} ${numOfLivesRemaining}`;
     } else {
       document.startViewTransition(
         () =>
-          (numOfLivesHeading.textContent = `${numOfLivesRemainingText} ${numOfLivesRemaining}`),
+          (numOfLivesHeading.textContent = `${NUM_OF_LIVES_REMAINING_TEXT} ${numOfLivesRemaining}`),
       );
     }
     // Display correct answer
