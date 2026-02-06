@@ -190,7 +190,7 @@ const resetStyles = (levelTextTextContent = "", endOfGame = false) => {
   ANSWER_OBJ.red = 0;
   ANSWER_OBJ.green = 0;
   ANSWER_OBJ.blue = 0;
-  if (!endOfGame) {
+  if (endOfGame) {
     endGameResetStyles();
   }
   // Remove next level button style
@@ -290,11 +290,11 @@ const showCorrectAnswerDisplay = () => {
 startGameBtn.addEventListener("click", startGame);
 nextLvlOrEndGameBtn.addEventListener("click", () => {
   if (nextLvlOrEndGameBtn.textContent === END_GAME_TEXT) {
-    resetStyles();
+    resetStyles(undefined, true);
     // Reset number of squares
     numOfSquares = STARTING_NUM_OF_GENERATED_SQUARES;
   } else if (nextLvlOrEndGameBtn.textContent === NEXT_LEVEL_TEXT) {
-    resetStyles(`Level ${++levelVal}`, true);
+    resetStyles(`Level ${++levelVal}`);
     // Increase number of squares by 1
     ++numOfSquares;
     // Generate next game squares
