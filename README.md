@@ -27,3 +27,9 @@ Good luck!
 - HTML
 - CSS (SCSS)
 - JavaScript
+
+## Credits
+### Contact
+
+If you have any questions or just want to connect, you can reach me on
+[LinkedIn](https://www.linkedin.com/in/andyagyeidwumah/) 👍.
